@@ -1,0 +1,90 @@
+- As root: install 'git' and 'node' on your server via the package manager (apt-get install git node, or yum install git node, or zypper install git node ...etc..)
+- From here on, use your Rhostgame's Linux user on the console!
+- As your Rhost game's user, on the linux terminal, run these two commands:
+
+cd ~
+git clone https://github.com/RhostMUSH/discord-relay
+
+
+- Copy the file "~/discord_relay/update_discord.sh" into your ~/<RHOSTGAME>/Server/game/scripts/ directory.
+- Run the following command:
+
+chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
+
+
+- Edit the file:
+-- Change '/path/to/nodejs' to either 'node' or a specific path like '/usr/bin/node'
+-- Change '/path/to/discord_send.js' to '/home/<youruser>/discord-relay/discord_send.js'
+-- Save and exit the file
+
+
+- Set uo a so-called 'WebHook' for every Discord channel you want messages from the MUSH to be sent to:
+-- In discord, rightclick a channel, select 'Edit Channel'
+-- Select the 'Integrations' category
+-- Click 'Create Webhook'
+-- Click the new 'bot' entry
+-- Rename it to 'DiscordRelay' and click 'copy webhook url'. Paste the url into a local notepad along with what MUSH(!) channel should send to this channel
+
+
+- On the Linux terminal, edit 'discord-relay/discord_send.js':
+-- Replace the values in the 'ashcom-channel-name':'DISCORD CHANNEL WEBHOOK' with each channel name and the discord webhook of the Discord channel you want to send to
+-- You can make a copy of the line for every different channel, with its own discord webhook. Make sure to keep the comma at the end.
+-- Save and exit the file
+
+
+- In the Rhost, as an Immortal:
+-- Add "[setq(a,name(%#))][setq(b,[stripansi([r(7)])])][setq(c,[r(1)])][execscript(update_discord.sh)]" at the end of the 'DO_HIST1' attribute of the 'ComSysSIDEFX' object.
+-- @power/councilor the 'ComSysSIDEFX' 'EXECSCRIPT'
+- Run the following commands:
+
+@create Discord-API
+@tag/add discordapi=Discord-API
+@api/password #discordapi=THINK OF A DISCORD API PASSWORD HERE
+@api/enable #discordapi
+
+- If your Discord channels are named exactly like your MUSH channels, you can simply do:
+
+&CHANHANDLER #discordapi=%0
+
+- Else you need to do something like:
+
+&CHANHANDLER #discordapi=[ifelse(match(public,%0),discord,ifelse(match(off-topic,%0),discord-offtopic,%0))]
+
+- Above example would send messages from the Discord Channel 'public' to the MUSh channel 'discord', messages from the Discord channel 'off-topic' to the MUSH channel 'discord-offtopc', and other Discord channels that actually match MUSH channels to those.
+- Discord channels that do not match MUSH channels and are not handled by this attribute do not send to the MUSH.
+- Place the object in a safe room. It does not need to be the master room.
+
+
+- Now we need to create a Discord Bot!
+-- Browse to https://discord.com/developers/applications and log in with your Discord user
+-- Click on 'New Application' at the top right, and name it 'RhostBot' or 'YOURGAMEBot' or whatever and hit 'ok'
+-- Give it a fancy icon!
+-- Select the 'Bot' category
+---- Disable 'Public Bot'
+---- Enable 'Message Content Intent'
+---- Select 'Reset token' and COPY THE BOT TOKEN TO NOTEPAD
+-- Select the 'Install' category
+---- Uncheck 'User Install'
+---- Under 'Guild Install' add 'bot'
+---- Under 'Permissions' add:
+------ Change Nickname
+------ Read Message History
+------ Read Messages/View Channels
+------ Send Messages
+------ Send Messages in Threads
+---- Now make sure 'Install Link' is set to 'Discord provided link' and copy the link to a notepad. Save it for later!
+---- Open the link in your browser in another tab and then pick your Discord server so the bot gets added to it :)
+
+
+- On the Linux Console, edit "discord-relay/discord_receive.js" and:
+-- Change the '#50' to this API object's #dbref.
+-- Change the 'SomethingSecure' password to whatever you turned 'THINK OF A DISCORD API PASSWORD HERE' above into.
+-- Change the 'DISCORD BOT TOKEN' to the BOT TOKEN you created on the discord bot site above.
+-- Save and exit the file
+
+
+- Start the Discord bot with the following command:
+
+node ./discord_receive.js &> /dev/null &
+
+- Enjoy!
