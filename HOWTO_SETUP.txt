@@ -33,6 +33,7 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 - On the Linux terminal, edit 'discord-relay/discord_send.js':
 -- Replace the values in the 'ashcom-channel-name':'DISCORD CHANNEL WEBHOOK' with each channel name and the discord webhook of the Discord channel you want to send to
 -- You can make a copy of the line for every different channel, with its own discord webhook. Make sure to keep the comma at the end.
+-- IMPORTANT: The channelnames should be all lowercase in this file.
 -- Save and exit the file
 
 
@@ -41,8 +42,10 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 - @reboot the MUSH.
 
 - In the Rhost, as an Immortal:
+-- Change "[u(F_CHK_CEMIT,%0,%1)]" to "[u(F_CHK_CEMIT,[objeval(%#,s(%0))],%1)]" in the CMD_CEMITNP attribute on the 'ComSys' object.
 -- Add "[setq(a,name(%#))][setq(b,[stripansi([r(7)])])][setq(c,[r(1)])][execscript(update_discord.sh)]" at the end of the 'DO_HIST1' attribute of the 'ComSysSIDEFX' object.
 -- @power/councilor the 'ComSysSIDEFX' 'EXECSCRIPT'
+
 - Run the following commands:
 
 @create Discord-API
@@ -68,7 +71,7 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 -- Click on 'New Application' at the top right, and name it 'RhostBot' or 'YOURGAMEBot' or whatever and hit 'ok'
 -- Give it a fancy icon!
 -- Select the 'Bot' category
----- Disable 'Public Bot'
+---- Enable 'Public Bot'
 ---- Enable 'Message Content Intent'
 ---- Select 'Reset token' and COPY THE BOT TOKEN TO NOTEPAD
 -- Select the 'Install' category
@@ -82,6 +85,7 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 ------ Send Messages in Threads
 ---- Now make sure 'Install Link' is set to 'Discord provided link' and copy the link to a notepad. Save it for later!
 ---- Open the link in your browser in another tab and then pick your Discord server so the bot gets added to it :)
+---- Now DISABLE 'Public Bot' again, as well as its discord link.
 
 
 - On the Linux Console, edit "discord-relay/discord_receive.js" and:
