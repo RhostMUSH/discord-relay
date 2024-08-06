@@ -42,6 +42,7 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 - @reboot the MUSH.
 
 - In the Rhost, as an Immortal:
+-- Change the Uselock on the 'ComSys' object to check for bittype(owner()) instead of just bittype(), and lower the required bittype to 3.
 -- Change "[u(F_CHK_CEMIT,%0,%1)]" to "[u(F_CHK_CEMIT,[objeval(%#,s(%0))],%1)]" in the CMD_CEMITNP attribute on the 'ComSys' object.
 -- Add "[setq(a,name(%#))][setq(b,[stripansi([r(7)])])][setq(c,[r(1)])][execscript(update_discord.sh)]" at the end of the 'DO_HIST1' attribute of the 'ComSysSIDEFX' object.
 -- @power/councilor the 'ComSysSIDEFX' 'EXECSCRIPT'
