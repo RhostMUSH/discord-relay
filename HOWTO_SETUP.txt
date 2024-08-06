@@ -1,10 +1,14 @@
-- As root: install 'git' and 'node' on your server via the package manager (apt-get install git node, or yum install git node, or zypper install git node ...etc..)
+- As root: install 'git', 'npm' and 'node' on your server via the package manager (apt-get install git node npm, or yum install git node npm, or zypper install git node npm ...etc..)
 - From here on, use your Rhostgame's Linux user on the console!
 - As your Rhost game's user, on the linux terminal, run these two commands:
 
 cd ~
 git clone https://github.com/RhostMUSH/discord-relay
 
+- This will grab a copy of the code off github. Next, we need to use npm to install all the dependencies.
+
+cd discord-relay
+npm install
 
 - Copy the file "~/discord_relay/update_discord.sh" into your ~/<RHOSTGAME>/Server/game/scripts/ directory.
 - Run the following command:
