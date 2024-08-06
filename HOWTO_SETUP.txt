@@ -36,6 +36,10 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 -- Save and exit the file
 
 
+- Edit your ~/<RHOSTGAME>/Server/game/netrhost.conf
+- In this file, set (or add) 'api_port 60601' as a config setting
+- @reboot the MUSH.
+
 - In the Rhost, as an Immortal:
 -- Add "[setq(a,name(%#))][setq(b,[stripansi([r(7)])])][setq(c,[r(1)])][execscript(update_discord.sh)]" at the end of the 'DO_HIST1' attribute of the 'ComSysSIDEFX' object.
 -- @power/councilor the 'ComSysSIDEFX' 'EXECSCRIPT'
