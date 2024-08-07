@@ -60,9 +60,9 @@ chmod 770 ~/<RHOSTGAME>/Server/game/scripts/update_discord.sh
 
 - Else you need to do something like:
 
-&CHANHANDLER #discordapi=[ifelse(match(public,%0),discord,ifelse(match(off-topic,%0),discord-offtopic,%0))]
+&CHANHANDLER #discordapi=[ifelse(match(WolfDen,%0),public,ifelse(match(New Faces,%0),newbie,%0))]
 
-- Above example would send messages from the Discord Channel 'public' to the MUSh channel 'discord', messages from the Discord channel 'off-topic' to the MUSH channel 'discord-offtopc', and other Discord channels that actually match MUSH channels to those.
+- Above example would send messages from the Discord Channel 'WolfDen' to the MUSh channel 'public', messages from the Discord channel 'New Faces' to the MUSH channel 'newbie', and other Discord channels that actually match MUSH channels to those.
 - Discord channels that do not match MUSH channels and are not handled by this attribute do not send to the MUSH.
 - Place the object in a safe room. It does not need to be the master room.
 
